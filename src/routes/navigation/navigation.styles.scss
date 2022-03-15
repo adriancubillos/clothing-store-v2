@@ -1,3 +1,13 @@
+$accent-color: crimson;
+
+@mixin userName {
+  color: $accent-color;
+  font-size: small;
+  display: flex;
+  justify-content: center;
+  text-decoration: underline;
+}
+
 .navigation {
   height: 70px;
   width: 100%;
@@ -21,6 +31,15 @@
     .nav-link {
       padding: 10px 15px;
       cursor: pointer;
+    }
+
+    .display-name {
+      @include userName();
+
+      &:hover {
+        transform: scale(1.5);
+        transition: transform 6s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+      }
     }
   }
 }
