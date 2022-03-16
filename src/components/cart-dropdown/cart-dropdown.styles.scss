@@ -20,7 +20,25 @@
     height: 240px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: auto;
+
+    .empty-cart {
+      display: flex;
+      flex-flow: column;
+      position: absolute;
+      top: 15%;
+      width: 80%;
+      align-items: center;
+
+      .empty-cart-image {
+        width: 50%;
+      }
+
+      .empty-message {
+        font-weight: 700;
+        padding: 30px 0;
+      }
+    }
   }
 
   button {
