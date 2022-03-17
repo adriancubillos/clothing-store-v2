@@ -1,5 +1,6 @@
-import { useContext, Fragment } from 'react';
-import ProductCard from '../../components/product-card/product-card.component';
+import { useContext } from 'react';
+import { CategoryPreview } from '../../components/category-preview/category-preview.component';
+
 import { CategoriesContext } from '../../contexts/categories.context';
 
 import './shop.styles.scss';
@@ -8,18 +9,14 @@ const Shop = () => {
   const { categoriesMap } = useContext(CategoriesContext);
 
   return (
-    <Fragment>
-      {Object.keys(categoriesMap).map((category) => (
-        <Fragment key={category}>
-          <h2>{category}</h2>
-          <div className='products-container'>
-            {categoriesMap[category].map((category) => (
-              <ProductCard key={category.id} product={category} />
-            ))}
-          </div>
-        </Fragment>
-      ))}
-    </Fragment>
+    <div className='shop-container'>
+      {Object.keys(categoriesMap).map((title) => {
+        const products = categoriesMap[title];
+        return (
+          <CategoryPreview key={title} title={title} products={products} />
+        );
+      })}
+    </div>
   );
 };
 
