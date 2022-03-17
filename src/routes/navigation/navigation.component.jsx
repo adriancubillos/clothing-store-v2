@@ -1,4 +1,4 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { Fragment, useContext } from 'react';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
@@ -14,6 +14,13 @@ const Navigation = () => {
   const { currentUser } = useContext(UserContext);
   const { isCartOpen } = useContext(CartContext);
 
+  const navigate = useNavigate();
+
+  const signOutHandler = () => {
+    signOutUser();
+    navigate('/');
+  };
+
   return (
     <Fragment>
       <div className='navigation'>
@@ -26,7 +33,7 @@ const Navigation = () => {
           </Link>
           {currentUser ? (
             <div>
-              <span className='nav-link' onClick={signOutUser}>
+              <span className='nav-link' onClick={signOutHandler}>
                 SIGN OUT
               </span>
               <span className='display-name'>{currentUser.email}</span>
