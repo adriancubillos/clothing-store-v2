@@ -10,12 +10,14 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import {
+  getFirestore,
   doc,
   getDoc,
-  getFirestore,
+  getDocs,
   setDoc,
   collection,
   writeBatch,
+  query,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -55,6 +57,24 @@ export const addCollectionAndDocuments = async (
 
   await batch.commit();
   console.log('done');
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+
+  const querySnapshot = await getDocs(q);
+  const categoryMap = querySnapshot.docs.reduce(
+    (acc, docSnapshot) => {
+      //HACK this first argument is the callback that gets called for each docs in the querySnapshot
+      const { title, items } = docSnapshot.data();
+      acc[title.toLowerCase()] = items;
+      return acc;
+    },
+    {} //HACK this second argument of the reduce is the initial instance of the object we want to crate
+  );
+
+  return categoryMap;
 };
 
 export const createUserDocumentFromAuth = async (
