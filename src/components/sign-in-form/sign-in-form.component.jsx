@@ -3,9 +3,9 @@ import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
 } from '../../utils/firebase/firebase.utils';
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import FormInput from '../form-Input/form-input.component';
-import './sign-in-form.styles.scss';
+import { ButtonsContainer, SignUpContainer } from './sign-in-form.styles';
 
 const defaultFormFields = {
   email: '',
@@ -29,7 +29,6 @@ const SignInForm = () => {
 
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
-
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/user-not-found') alert('USER NOT FOUND');
@@ -43,7 +42,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className='sign-up-container'>
+    <SignUpContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -63,14 +62,18 @@ const SignInForm = () => {
           label='password'
           required
         />
-        <div className='buttons-container'>
+        <ButtonsContainer>
           <Button type='submit'> Sign in </Button>
-          <Button buttonType='google' type='button' onClick={signInWithGoogle}>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            type='button'
+            onClick={signInWithGoogle}
+          >
             Sign in with Google
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 
